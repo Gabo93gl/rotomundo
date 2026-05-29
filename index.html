@@ -67,16 +67,15 @@
       content: '';
       position: absolute;
       inset: 0;
-      z-index: 1;
       background: linear-gradient(
         to right,
-        rgba(0,5,15,.95) 0%,
-        rgba(0,8,22,.88) 30%,
-        rgba(0,8,22,.60) 52%,
-        rgba(0,5,12,.10) 75%,
-        rgba(0,0,0,.0) 100%
+        rgba(0,5,15,1)    0%,
+        rgba(0,8,22,.97)  38%,
+        rgba(0,8,22,.70)  55%,
+        rgba(0,5,12,.15)  75%,
+        rgba(0,0,0,.0)   100%
       );
-      z-index: 0;
+      z-index: 2;
     }
 
     /* Grid — dos columnas: texto izquierda, tinaco derecha */
@@ -85,7 +84,7 @@
       grid-template-columns: 1fr 1fr;
       align-items: center;
       position: relative;
-      z-index: 2;
+      z-index: 3;
       padding: 80px 0 110px;
       text-align: left;
     }
