@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos — ROTOMUNDO | Tinacos y Cisternas</title>
+  <meta name="description" content="Catálogo completo de tinacos y cisternas ROTOMUNDO. Modelos bicapa y tricapa desde 450 hasta 5,000 litros. Garantía de 10 a 15 años." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    /* ── PAGE-SPECIFIC ── */
+    #productos { background: var(--gray); }
+
+    .prod-page-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .prod-page-header .section-label { justify-content: center; }
+    .prod-page-header .section-label::before { display: none; }
+    .prod-page-header .section-sub { margin: 0 auto 40px; text-align: center; }
+
+    /* Specs highlight bar */
+    .specs-bar {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--gray2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 56px;
+      overflow: hidden;
+    }
+    .specs-bar-item {
+      flex: 1;
+      text-align: center;
+      padding: 20px 16px;
+      border-right: 1px solid var(--gray2);
+      font-size: .82rem;
+    }
+    .specs-bar-item:last-child { border-right: none; }
+    .specs-bar-item strong {
+      display: block;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+    .specs-bar-item span { color: var(--gray3); }
+    @media (max-width: 700px) {
+      .specs-bar { flex-direction: column; }
+      .specs-bar-item { border-right: none; border-bottom: 1px solid var(--gray2); }
+      .specs-bar-item:last-child { border-bottom: none; }
+    }
+
+    /* Section title for grid groups */
+    .cat-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: .02em;
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--gray2);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cat-title span {
+      background: var(--navy);
+      color: #fff;
+      font-size: .75rem;
+      letter-spacing: .1em;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    /* CTA block bottom */
+    .prod-cta-block {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gray2);
+      padding: 48px 40px;
+      text-align: center;
+      margin-top: 64px;
+    }
+    .prod-cta-block h3 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .prod-cta-block p {
+      color: var(--gray3);
+      margin-bottom: 28px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .prod-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Side Drawer ── */
+    .drawer-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,8,20,.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: 200;
+      opacity: 0; pointer-events: none;
+      transition: opacity .35s ease;
+    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+
+    .drawer {
+      position: fixed;
+      top: 0; right: 0;
+      width: 480px; max-width: 100vw;
+      height: 100vh;
+      background: #fff;
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.22,1,.36,1);
+      display: flex; flex-direction: column;
+      box-shadow: -8px 0 40px rgba(0,0,0,.18);
+      overflow: hidden;
+    }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--gray2);
+      flex-shrink: 0;
+    }
+    .drawer-breadcrumb {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .8rem; color: var(--gray3);
+    }
+    .drawer-breadcrumb a { color: var(--gray3); transition: color .2s; }
+    .drawer-breadcrumb a:hover { color: var(--sky); }
+    .drawer-breadcrumb svg { opacity: .5; }
+    .drawer-close {
+      width: 36px; height: 36px;
+      border-radius: 50%; border: 1px solid var(--gray2);
+      background: transparent; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray3); transition: all .2s;
+      flex-shrink: 0;
+    }
+    .drawer-close:hover { background: var(--gray); color: var(--text); }
+
+    .drawer-body {
+      flex: 1; overflow-y: auto; padding: 0;
+    }
+    .drawer-img-wrap {
+      width: 100%; background: var(--gray);
+      display: flex; align-items: center; justify-content: center;
+      padding: 32px;
+      border-bottom: 1px solid var(--gray2);
+      position: relative;
+    }
+    .drawer-img-wrap img {
+      max-height: 220px; object-fit: contain;
+      transition: transform .35s ease;
+    }
+    .drawer-img-wrap:hover img { transform: scale(1.04); }
+    .drawer-img-badge {
+      position: absolute; top: 16px; left: 16px;
+      background: linear-gradient(135deg, var(--navy), var(--sky));
+      color: #fff; font-family: 'Oswald', sans-serif;
+      font-size: .65rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+    }
+
+    .drawer-info { padding: 24px; }
+    .drawer-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--text); line-height: 1.2; margin-bottom: 8px;
+    }
+    .drawer-capacity {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.4rem; font-weight: 700;
+      color: var(--navy); line-height: 1;
+      margin-bottom: 16px;
+    }
+    .drawer-tags {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+    }
+    .drawer-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--gray); border: 1px solid var(--gray2);
+      border-radius: 100px; padding: 5px 12px;
+      font-size: .78rem; font-weight: 500; color: var(--text);
+    }
+    .drawer-tag.highlight {
+      background: #fefce8; border-color: #fde047; color: #854d0e;
+    }
+    .drawer-desc {
+      font-size: .92rem; color: #4b5563; line-height: 1.75;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--gray2);
+    }
+    .drawer-specs { margin-bottom: 24px; }
+    .drawer-specs-title {
+      font-family: 'Oswald', sans-serif; font-size: .75rem;
+      font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gray3); margin-bottom: 10px;
+    }
+
+    .drawer-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--gray2);
+      flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 10px;
+      background: #fff;
+    }
+    .drawer-btn-primary {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 14px;
+      background: var(--navy); color: #fff;
+      border: none; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem;
+      cursor: pointer; transition: background .2s, transform .2s;
+      text-decoration: none;
+    }
+    .drawer-btn-primary:hover { background: var(--sky); transform: translateY(-1px); color: #fff; }
+    .drawer-btn-wa {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 14px;
+      background: #25d366; color: #fff;
+      border: none; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem;
+      cursor: pointer; transition: background .2s, transform .2s;
+      text-decoration: none;
+    }
+    .drawer-btn-wa:hover { background: #1da851; transform: translateY(-1px); color: #fff; }
+
+    @media (max-width: 520px) {
+      .drawer { width: 100vw; }
+    }
+
+    /* Accesorios nota */
+    .accesorios-note {
+      background: var(--sky-light);
+      border: 1px solid rgba(0,153,204,.25);
+      border-radius: var(--radius);
+      padding: 16px 24px;
+      font-size: .9rem;
+      color: var(--navy);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .accesorios-note svg { flex-shrink: 0; color: var(--sky); margin-top: 1px; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar" role="navigation" aria-label="Navegación principal">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="ROTOMUNDO inicio">
+      <img src="logo sin fondo.png" alt="" class="nav-logo-icon" aria-hidden="true" />
+      <img src="logo rotomundo letras.png" alt="ROTOMUNDO" class="nav-logo-text" />
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="productos.html" class="nav-active">Productos</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+    <a href="https://api.whatsapp.com/send?phone=525578289958&text=Hola,%20me%20interesa%20cotizar%20un%20producto%20ROTOMUNDO" target="_blank" rel="noopener" class="nav-cta-btn" aria-label="WhatsApp">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú móvil">
+  <a href="index.html">Inicio</a>
+  <a href="productos.html">Productos</a>
+  <a href="nosotros.html">Nosotros</a>
+  <a href="contacto.html">Contacto</a>
+  <a href="https://api.whatsapp.com/send?phone=525578289958&text=Hola,%20me%20interesa%20cotizar%20un%20producto%20ROTOMUNDO" target="_blank" rel="noopener" class="nav-cta-btn">WhatsApp</a>
+</div>
+
+<!-- PAGE HERO -->
+<header class="page-hero" aria-label="Encabezado de página">
+  <div class="container">
+    <nav class="page-breadcrumb" aria-label="Ruta de navegación">
+      <a href="index.html">Inicio</a>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      <span>Productos</span>
+    </nav>
+    <h1 class="page-hero-title h-enter d1">Catálogo Maestro de<br/><em>Soluciones Hidráulicas</em></h1>
+    <p class="page-hero-sub h-enter d2">Sistemas de almacenamiento de agua para hogares, comercios e industrias. Diseñados para durar más de lo que esperas.</p>
+  </div>
+</header>
+
+<!-- MAIN CATALOG -->
+<section id="productos" class="section" aria-labelledby="cat-title">
+  <div class="container">
+    <div class="prod-page-header fade-in">
+      <p class="section-label">Catálogo completo</p>
+      <h2 id="cat-title" class="section-title">Tinacos y Cisternas ROTOMUNDO</h2>
+      <p class="section-sub">Elige el modelo que mejor se adapte a tus necesidades. Todos fabricados con tecnología de rotomoldeo y materiales de primera calidad.</p>
+    </div>
+
+    <div class="accesorios-note fade-in">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div>
+        <p style="margin-bottom:6px;"><strong>Accesorios incluidos en todos los modelos:</strong> Tapa, válvula de llenado, varilla de flotador, multiconector con válvula y jarro de aire. Conexión roscada de 1½" para descarga. Tapa con cuerda de 18" de diámetro.</p>
+        <p style="color:var(--sky-dark);"><strong>Instalación:</strong> El tinaco o cisterna debe colocarse sobre una base completamente plana, sin separaciones, con una circunferencia igual o mayor al producto. Para el multiconector utilizar cinta teflón para evitar fugas. No sobreaprete.</p>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Categorías de producto">
+      <button class="tab-btn active" role="tab" id="tab-tinacos" aria-selected="true" aria-controls="panel-tinacos">Tinacos</button>
+      <button class="tab-btn" role="tab" id="tab-cisternas" aria-selected="false" aria-controls="panel-cisternas">Cisternas</button>
+    </div>
+
+    <!-- ── TINACOS ── -->
+    <div class="tab-content active" id="panel-tinacos" role="tabpanel" aria-labelledby="tab-tinacos">
+
+      <div class="cat-title">Tinacos Tricapa — Premium<span>Garantía 15 años</span></div>
+      <div class="prod-grid" style="margin-bottom:48px;">
+
+        <article class="prod-card fade-in" data-d="1" data-pid="tin_tricapa_1200">
+          <div class="prod-img">
+            <span class="prod-badge">Tricapa Premium</span>
+            <img src="assets/tinaco_tricapa_beige_1200.png" alt="Tinaco Tricapa Beige 1200 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Tinaco Tricapa Beige Reforzado</h3>
+            <p class="prod-tagline">Polietileno 100% virgen · Antibacterial · UV</p>
+            <span class="prod-capacity">1,200 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 15 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+
+        <article class="prod-card fade-in" data-d="2" data-pid="tin_tricapa_750">
+          <div class="prod-img">
+            <span class="prod-badge">Tricapa Premium</span>
+            <img src="assets/tinaco_tricapa_beige_750.png" alt="Tinaco Tricapa Beige 750 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Tinaco Tricapa Beige Reforzado</h3>
+            <p class="prod-tagline">Compacto · Virgen · Antibacterial · UV</p>
+            <span class="prod-capacity">750 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 15 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+
+        <article class="prod-card fade-in" data-d="3" data-pid="tin_vertical_900">
+          <div class="prod-img">
+            <span class="prod-badge">Tricapa Premium</span>
+            <img src="assets/tinaco_tricapa_beige_900v.png" alt="Tinaco Vertical 900 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Tinaco Vertical Tricapa Beige</h3>
+            <p class="prod-tagline">Diseño vertical · Bajo perfil · Fácil instalación</p>
+            <span class="prod-capacity">900 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 15 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="cat-title">Tinacos Bicapa — Estándar<span>Garantía 10 años</span></div>
+      <div class="prod-grid">
+
+        <article class="prod-card fade-in" data-d="1" data-pid="tin_bicapa_1200">
+          <div class="prod-img">
+            <img src="assets/tinaco_bicapa_negro_1200.png" alt="Tinaco Bicapa Negro 1200 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Tinaco Bicapa Negro Reforzado</h3>
+            <p class="prod-tagline">Interior blanco antibacterial · Exterior UV negro</p>
+            <span class="prod-capacity">1,200 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 10 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+
+        <article class="prod-card fade-in" data-d="2" data-pid="tin_bicapa_750">
+          <div class="prod-img">
+            <img src="assets/tinaco_bicapa_negro_750.png" alt="Tinaco Bicapa Negro 750 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Tinaco Bicapa Negro Reforzado</h3>
+            <p class="prod-tagline">Compacto · Bicapa negro · Antibacterial</p>
+            <span class="prod-capacity">750 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 10 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+
+        <article class="prod-card fade-in" data-d="3" data-pid="tin_450">
+          <div class="prod-img">
+            <img src="assets/tinaco_tricapa_beige_450.png" alt="Tinaco 450 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Tinaco Bicapa / Tricapa Reforzado</h3>
+            <p class="prod-tagline">Modelo compacto · Virgen · Económico</p>
+            <span class="prod-capacity">450 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 10–15 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ── CISTERNAS ── -->
+    <div class="tab-content" id="panel-cisternas" role="tabpanel" aria-labelledby="tab-cisternas">
+
+      <div class="cat-title">Cisternas Tricapa — Grado Alimenticio<span>Garantía 15 años</span></div>
+      <div class="prod-grid" style="margin-bottom:48px;">
+
+        <article class="prod-card fade-in" data-d="1" data-pid="cis_tri_3650">
+          <div class="prod-img">
+            <span class="prod-badge">Tricapa Premium</span>
+            <img src="assets/cisterna_tricapa_beige_2850.png" alt="Cisterna Tricapa Beige 3650 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Cisterna Tricapa Beige Grado Alimenticio</h3>
+            <p class="prod-tagline">Grado alimenticio · Apta agua potable</p>
+            <span class="prod-capacity">3,650 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 15 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+
+        <article class="prod-card fade-in" data-d="2" data-pid="cis_tri_2850">
+          <div class="prod-img">
+            <span class="prod-badge">Tricapa Premium</span>
+            <img src="assets/cisterna_tricapa_beige_2850.png" alt="Cisterna Tricapa Beige 2850 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Cisterna Tricapa Beige Grado Alimenticio</h3>
+            <p class="prod-tagline">Grado alimenticio · Tricapa · Residencial</p>
+            <span class="prod-capacity">2,850 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 15 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+
+        <article class="prod-card fade-in" data-d="3" data-pid="cis_tri_blanca">
+          <div class="prod-img">
+            <span class="prod-badge">Tricapa Premium</span>
+            <img src="assets/cisterna_tricapa_blanca_1200.png" alt="Cisterna Blanca 1200 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Cisterna Tricapa Blanca Grado Alimenticio</h3>
+            <p class="prod-tagline">Compacta · Grado alimenticio · Tricapa</p>
+            <span class="prod-capacity">1,200 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 15 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="cat-title">Cisternas Bicapa — Industrial<span>Garantía 10 años</span></div>
+      <div class="prod-grid">
+
+        <article class="prod-card fade-in" data-d="1" data-pid="cis_bic_5000">
+          <div class="prod-img">
+            <img src="assets/cisterna_bicapa_negro_5000.png" alt="Cisterna Negro 5000 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Cisterna Bicapa Negro Reforzada</h3>
+            <p class="prod-tagline">Alta capacidad · Industrial · Bicapa negro</p>
+            <span class="prod-capacity">5,000 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 10 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+
+        <article class="prod-card fade-in" data-d="2" data-pid="cis_bic_3650">
+          <div class="prod-img">
+            <img src="assets/cisterna_bicapa_negro_3650.png" alt="Cisterna Negro 3650 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Cisterna Bicapa Negro Reforzada</h3>
+            <p class="prod-tagline">Uso comercial · Bicapa negro · Resistente</p>
+            <span class="prod-capacity">3,650 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 10 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+
+        <article class="prod-card fade-in" data-d="3" data-pid="cis_bic_2850">
+          <div class="prod-img">
+            <img src="assets/cisterna_bicapa_negro_2850.png" alt="Cisterna Negro 2850 Lts" loading="lazy" />
+          </div>
+          <div class="prod-body">
+            <h3 class="prod-name">Cisterna Bicapa Negro Reforzada</h3>
+            <p class="prod-tagline">Mediana capacidad · Bicapa · UV negro</p>
+            <span class="prod-capacity">2,850 Lts</span>
+            <div class="prod-offer-row"><span class="prod-garantia-badge">⭐ Garantía 10 años</span></div>
+            <button class="prod-cta">Ver detalles</button>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- CTA BOTTOM -->
+    <div class="prod-cta-block fade-in">
+      <h3>¿Buscas una solución a medida?</h3>
+      <p>Contáctanos y te asesoramos sin costo para encontrar el producto ideal para tu proyecto residencial, comercial o industrial.</p>
+      <div class="prod-cta-btns">
+        <a href="contacto.html" class="btn btn-navy btn-lg">Solicitar cotización</a>
+        <a href="https://api.whatsapp.com/send?phone=525578289958&text=Hola,%20quiero%20asesor%C3%ADa%20sobre%20productos%20ROTOMUNDO" target="_blank" rel="noopener" class="btn btn-wa btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp directo
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SIDE DRAWER -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="productDrawer" role="dialog" aria-modal="true" aria-label="Detalle del producto">
+  <div class="drawer-header">
+    <nav class="drawer-breadcrumb" aria-label="Ruta">
+      <a href="index.html">Inicio</a>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      <a href="productos.html">Productos</a>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      <span id="drawerBreadcrumb">—</span>
+    </nav>
+    <button class="drawer-close" id="drawerClose" aria-label="Cerrar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-img-wrap">
+      <span class="drawer-img-badge" id="drawerBadge" style="display:none"></span>
+      <img id="drawerImg" src="" alt="" />
+    </div>
+    <div class="drawer-info">
+      <h2 class="drawer-name" id="drawerName"></h2>
+      <div class="drawer-capacity" id="drawerCapacity"></div>
+      <div class="drawer-tags" id="drawerTags"></div>
+      <p class="drawer-desc" id="drawerDesc"></p>
+      <div class="drawer-specs">
+        <p class="drawer-specs-title">Especificaciones técnicas</p>
+        <div id="drawerSpecs"></div>
+      </div>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <button class="drawer-btn-primary" id="drawerCotizar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Solicitar cotización
+    </button>
+    <a class="drawer-btn-wa" id="drawerWa" href="#" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Escribir por WhatsApp
+    </a>
+  </div>
+</aside>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" aria-label="ROTOMUNDO">
+          <img src="logo sin fondo.png" alt="" class="nav-logo-icon footer-logo-icon" aria-hidden="true" />
+          <img src="logo rotomundo letras.png" alt="ROTOMUNDO" class="nav-logo-text footer-logo-text" />
+        </a>
+        <p class="footer-tagline">Lo mejor al alcance de tus manos. Soluciones limpias que convencen a primera vista.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/p/Rotomundo-61566841648127/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/__rotomundo__" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://www.tiktok.com/@_rotomundo_" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a>
+          <a href="https://api.whatsapp.com/send?phone=525578289958" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Navegación</h5><ul><li><a href="index.html">Inicio</a></li><li><a href="productos.html">Productos</a></li><li><a href="nosotros.html">Nosotros</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+      <div class="footer-col"><h5>Productos</h5><ul><li><a href="#panel-tinacos">Tinacos</a></li><li><a href="#panel-cisternas">Cisternas</a></li><li><a href="#panel-tinacos">Tricapa Premium</a></li><li><a href="#panel-cisternas">Bicapa Reforzado</a></li></ul></div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Cuautitlán Izcalli, Edo. México</span></div>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012.18 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.34a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg><a href="tel:+525578289958">+52 55 7828 9958</a></div>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:contacto@rotomundo.com.mx">contacto@rotomundo.com.mx</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ROTOMUNDO. Todos los derechos reservados.</span>
+          </div>
+  </div>
+</footer>
+
+<a href="https://api.whatsapp.com/send?phone=525578289958&text=Hola,%20me%20interesa%20cotizar%20un%20producto%20ROTOMUNDO" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  <div class="wa-pulse" aria-hidden="true"></div>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+  const ham = document.getElementById('hamburger'), menu = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => { const o = ham.classList.toggle('open'); menu.classList.toggle('open', o); ham.setAttribute('aria-expanded', o); });
+
+  function switchTab(show, hide, btnShow, btnHide) {
+    ['active'].forEach(c => { document.getElementById(show).classList.add(c); document.getElementById(hide).classList.remove(c); document.getElementById(btnShow).classList.add(c); document.getElementById(btnHide).classList.remove(c); });
+    document.getElementById(btnShow).setAttribute('aria-selected','true');
+    document.getElementById(btnHide).setAttribute('aria-selected','false');
+  }
+  document.getElementById('tab-tinacos').addEventListener('click', () => switchTab('panel-tinacos','panel-cisternas','tab-tinacos','tab-cisternas'));
+  document.getElementById('tab-cisternas').addEventListener('click', () => switchTab('panel-cisternas','panel-tinacos','tab-cisternas','tab-tinacos'));
+
+  function cotizar(nombre, capacidad) {
+    const msg = `Hola ROTOMUNDO, me interesa cotizar:\n\n🏷️ Producto: ${nombre}\n📦 Capacidad: ${capacidad}\n\n¿Me pueden dar información y precio?`;
+    window.open('https://api.whatsapp.com/send?phone=525578289958&text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fadeObs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
+
+  // ── Producto DB ──────────────────────────────
+  const PRODUCTS = {
+    tin_tricapa_1200: { name:'Tinaco Tricapa Beige Reforzado', capacity:'1,200 Lts', img:'assets/tinaco_tricapa_beige_1200.png', badge:'Tricapa Premium', tagline:'Polietileno 100% virgen · Antibacterial · UV', garantia:'15 años', tags:['Tricapa Premium','UV resistente','Antibacterial','Grado alimenticio'], specs:[['Capacidad','1,200 Lts'],['Diámetro','1.10 Mts'],['Alto','1.50 Mts'],['Peso','13 Kg'],['Conexión descarga','1½"'],['Garantía','15 años']], desc:'Nuestro modelo más vendido. Fabricado con polietileno virgen 100% en tres capas: exterior UV, núcleo estructural y capa interior antibacterial que inhibe algas y bacterias. Resistente a temperaturas extremas y radiación solar.' },
+    tin_tricapa_750:  { name:'Tinaco Tricapa Beige Reforzado', capacity:'750 Lts', img:'assets/tinaco_tricapa_beige_750.png', badge:'Tricapa Premium', tagline:'Compacto · Virgen · Antibacterial · UV', garantia:'15 años', tags:['Tricapa Premium','UV resistente','Antibacterial','Compacto'], specs:[['Capacidad','750 Lts'],['Diámetro','63 Cm'],['Alto','1.16 Mts'],['Conexión descarga','1½"'],['Garantía','15 años']], desc:'Versión compacta del modelo tricapa beige. Ideal para hogares con espacio reducido en azotea. Mismo proceso de fabricación tricapa con materia prima 100% virgen.' },
+    tin_vertical_900: { name:'Tinaco Vertical Tricapa Beige', capacity:'900 Lts', img:'assets/tinaco_tricapa_beige_900v.png', badge:'Tricapa Premium', tagline:'Diseño vertical · Bajo perfil · Fácil instalación', garantia:'15 años', tags:['Tricapa Premium','Vertical','UV resistente','Bajo perfil'], specs:[['Capacidad','900 Lts'],['Diámetro','75 Cm'],['Alto','1.95 Mts'],['Conexión descarga','1½"'],['Garantía','15 años']], desc:'Diseño vertical de bajo perfil, ideal para instalaciones con restricción de altura horizontal. Tricapa premium con todas las características de resistencia y calidad de nuestra línea estándar.' },
+    tin_bicapa_1200:  { name:'Tinaco Bicapa Negro Reforzado', capacity:'1,200 Lts', img:'assets/tinaco_bicapa_negro_1200.png', badge:'', tagline:'Interior blanco antibacterial · Exterior UV negro', garantia:'10 años', tags:['Bicapa','UV resistente','Antibacterial','Uso doméstico'], specs:[['Capacidad','1,200 Lts'],['Diámetro','1.10 Mts'],['Alto','1.50 Mts'],['Conexión descarga','1½"'],['Garantía','10 años']], desc:'Bicapa negro con capa exterior de alta resistencia UV y capa interior blanca antibacterial. El color negro reduce el crecimiento de algas por bloqueo de luz solar. Polietileno virgen 100%.' },
+    tin_bicapa_750:   { name:'Tinaco Bicapa Negro Reforzado', capacity:'750 Lts', img:'assets/tinaco_bicapa_negro_750.png', badge:'', tagline:'Compacto · Bicapa negro · Antibacterial', garantia:'10 años', tags:['Bicapa','UV resistente','Antibacterial','Compacto'], specs:[['Capacidad','750 Lts'],['Diámetro','63 Cm'],['Alto','1.16 Mts'],['Conexión descarga','1½"'],['Garantía','10 años']], desc:'Versión compacta del tinaco bicapa negro. Perfecto para hogares pequeños o como tanque secundario. Exterior negro con protección UV y capa interior blanca antibacterial.' },
+    tin_450:          { name:'Tinaco Bicapa / Tricapa Reforzado', capacity:'450 Lts', img:'assets/tinaco_tricapa_beige_450.png', badge:'', tagline:'Modelo compacto · Virgen · Económico', garantia:'10–15 años', tags:['Bicapa/Tricapa','Compacto','UV resistente'], specs:[['Capacidad','450 Lts'],['Diámetro','63 Cm'],['Alto','60 Cm'],['Conexión descarga','1½"'],['Garantía','10–15 años']], desc:'El modelo más compacto de nuestra línea. Ideal para uso en departamentos o como depósito auxiliar. Disponible en versión bicapa y tricapa.' },
+    cis_tri_3650:     { name:'Cisterna Tricapa Beige Grado Alimenticio', capacity:'3,650 Lts', img:'assets/cisterna_tricapa_beige_2850.png', badge:'Tricapa Premium', tagline:'Grado alimenticio · Apta agua potable', garantia:'15 años', tags:['Tricapa Premium','Grado alimenticio','UV resistente','Antibacterial'], specs:[['Capacidad','3,650 Lts'],['Diámetro','1.57 Mts'],['Alto','1.87 Mts'],['Conexión descarga','2"'],['Garantía','15 años']], desc:'Cisterna tricapa para uso residencial, comercial e industrial. Interior grado alimenticio certificado para almacenamiento de agua potable. Instalación enterrada o superficial.' },
+    cis_tri_2850:     { name:'Cisterna Tricapa Beige Grado Alimenticio', capacity:'2,850 Lts', img:'assets/cisterna_tricapa_beige_2850.png', badge:'Tricapa Premium', tagline:'Grado alimenticio · Tricapa · Residencial', garantia:'15 años', tags:['Tricapa Premium','Grado alimenticio','UV resistente'], specs:[['Capacidad','2,850 Lts'],['Diámetro','1.57 Mts'],['Alto','1.65 Mts'],['Conexión descarga','2"'],['Garantía','15 años']], desc:'Cisterna tricapa de mediana capacidad. Interior grado alimenticio, capa antibacterial y protección UV. Polietileno 100% virgen.' },
+    cis_tri_blanca:   { name:'Cisterna Tricapa Blanca Grado Alimenticio', capacity:'1,200 Lts', img:'assets/cisterna_tricapa_blanca_1200.png', badge:'Tricapa Premium', tagline:'Compacta · Grado alimenticio · Tricapa', garantia:'15 años', tags:['Tricapa Premium','Grado alimenticio','Compacta'], specs:[['Capacidad','1,200 Lts'],['Diámetro','1.10 Mts'],['Alto','1.50 Mts'],['Conexión descarga','2"'],['Garantía','15 años']], desc:'Cisterna tricapa compacta en acabado blanco. Ideal para instalaciones donde el espacio es limitado pero se requiere alta calidad y certificación grado alimenticio.' },
+    cis_bic_5000:     { name:'Cisterna Bicapa Negro Reforzada', capacity:'5,000 Lts', img:'assets/cisterna_bicapa_negro_5000.png', badge:'', tagline:'Alta capacidad · Industrial · Bicapa negro', garantia:'10 años', tags:['Bicapa Industrial','Alta capacidad','UV resistente','Uso industrial'], specs:[['Capacidad','5,000 Lts'],['Diámetro','1.85 Mts'],['Alto','2.22 Mts'],['Conexión descarga','2"'],['Garantía','10 años']], desc:'Cisterna de gran capacidad para uso industrial y comercial. Bicapa negro con exterior UV e interior antibacterial. Polietileno virgen 100%.' },
+    cis_bic_3650:     { name:'Cisterna Bicapa Negro Reforzada', capacity:'3,650 Lts', img:'assets/cisterna_bicapa_negro_3650.png', badge:'', tagline:'Uso comercial · Bicapa negro · Resistente', garantia:'10 años', tags:['Bicapa Industrial','UV resistente','Uso comercial'], specs:[['Capacidad','3,650 Lts'],['Diámetro','1.57 Mts'],['Alto','1.87 Mts'],['Conexión descarga','2"'],['Garantía','10 años']], desc:'Cisterna bicapa de alta capacidad para uso comercial. Exterior negro con protección UV e interior antibacterial. Fabricada con polietileno virgen.' },
+    cis_bic_2850:     { name:'Cisterna Bicapa Negro Reforzada', capacity:'2,850 Lts', img:'assets/cisterna_bicapa_negro_2850.png', badge:'', tagline:'Mediana capacidad · Bicapa · UV negro', garantia:'10 años', tags:['Bicapa Estándar','UV resistente'], specs:[['Capacidad','2,850 Lts'],['Diámetro','1.57 Mts'],['Alto','1.65 Mts'],['Conexión descarga','2"'],['Garantía','10 años']], desc:'Cisterna bicapa de mediana capacidad. Diseñada para instalación enterrada o superficial con exterior negro que maximiza la protección UV.' },
+  };
+
+  // ── Side Drawer ──────────────────────────────
+  const drawer   = document.getElementById('productDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+  const closeBtn = document.getElementById('drawerClose');
+
+  function openDrawer(data) {
+    document.getElementById('drawerBreadcrumb').textContent = data.capacity;
+    document.getElementById('drawerImg').src = data.img;
+    document.getElementById('drawerImg').alt = data.name;
+    const badge = document.getElementById('drawerBadge');
+    if (data.badge) { badge.textContent = data.badge; badge.style.display = ''; }
+    else badge.style.display = 'none';
+    document.getElementById('drawerName').textContent = data.name;
+    document.getElementById('drawerCapacity').textContent = data.capacity;
+    document.getElementById('drawerDesc').textContent = data.desc;
+
+    const tagsEl = document.getElementById('drawerTags');
+    tagsEl.innerHTML = `<span class="drawer-tag highlight">⭐ Garantía ${data.garantia}</span>`;
+    data.tags.forEach(t => { const s = document.createElement('span'); s.className = 'drawer-tag'; s.textContent = t; tagsEl.appendChild(s); });
+
+    document.getElementById('drawerSpecs').innerHTML = data.specs.map(([k,v]) =>
+      `<div class="spec-row"><span class="spec-label">${k}</span><span class="spec-val${k==='Garantía'?' garantia':''}">${v}</span></div>`
+    ).join('');
+
+    const waMsg = encodeURIComponent(`Hola ROTOMUNDO, me interesa cotizar:\n\n🏷️ Producto: ${data.name}\n📦 Capacidad: ${data.capacity}\n\n¿Me pueden dar información y precio?`);
+    document.getElementById('drawerWa').href = `https://api.whatsapp.com/send?phone=525578289958&text=${waMsg}`;
+    document.getElementById('drawerCotizar').onclick = () => { cotizar(data.name, data.capacity); };
+
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    drawer.querySelector('.drawer-body').scrollTop = 0;
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeDrawer);
+  backdrop.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  // Event delegation — abre drawer al clickear cualquier parte de la tarjeta
+  document.addEventListener('click', e => {
+    const card = e.target.closest('.prod-card[data-pid]');
+    if (!card) return;
+    e.preventDefault();
+    const data = PRODUCTS[card.dataset.pid];
+    if (data) openDrawer(data);
+  });
+
+</script>
+</body>
+</html>

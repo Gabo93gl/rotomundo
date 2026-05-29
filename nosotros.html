@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosotros — ROTOMUNDO | Historia y Compromiso</title>
+  <meta name="description" content="Conoce la historia de ROTOMUNDO. Desde 2018 comprometidos con soluciones de almacenamiento de agua limpia para México." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray2);
+    }
+    .stats-bar-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .stat-block {
+      padding: 40px 32px;
+      border-right: 1px solid var(--gray2);
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .stat-block:last-child { border-right: none; }
+    .stat-icon {
+      width: 52px; height: 52px; flex-shrink: 0;
+      background: var(--sky-light);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .stat-icon svg { width: 26px; height: 26px; color: var(--sky); }
+    .stat-info .num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--navy); line-height: 1;
+    }
+    .stat-info .num span { color: var(--sky); }
+    .stat-info .lbl { font-size: .85rem; color: var(--gray3); margin-top: 4px; }
+    @media (max-width: 700px) {
+      .stats-bar-inner { grid-template-columns: 1fr; }
+      .stat-block { border-right: none; border-bottom: 1px solid var(--gray2); }
+      .stat-block:last-child { border-bottom: none; }
+    }
+
+    /* ── HISTORIA ── */
+    #historia { background: var(--white); }
+    .historia-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .historia-img {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      aspect-ratio: 4/3;
+    }
+    .historia-img img { width: 100%; height: 100%; object-fit: cover; }
+    .historia-text .section-sub { max-width: 100%; margin-bottom: 20px; }
+    .historia-list {
+      display: flex; flex-direction: column; gap: 14px;
+      margin: 24px 0 32px;
+    }
+    .historia-list-item {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .hist-check {
+      width: 22px; height: 22px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--navy), var(--sky));
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .hist-check svg { width: 12px; height: 12px; color: #fff; }
+    .historia-list-item p { font-size: .95rem; color: var(--gray3); line-height: 1.6; }
+    .historia-list-item strong { color: var(--text); }
+    @media (max-width: 800px) {
+      .historia-grid { grid-template-columns: 1fr; gap: 40px; }
+      .historia-img { aspect-ratio: 16/9; }
+    }
+
+    /* ── TIMELINE ── */
+    .tl-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .tl-track::before {
+      content: '';
+      position: absolute;
+      top: 28px; left: 10%; right: 10%;
+      height: 2px;
+      background: linear-gradient(to right, var(--navy), var(--sky));
+    }
+    .tl-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+    }
+    .tl-year {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: .06em;
+      margin-bottom: 12px;
+    }
+    .tl-dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--sky);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--sky);
+      margin-bottom: 20px;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .tl-content h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 8px;
+    }
+    .tl-content p { font-size: .84rem; color: var(--gray3); line-height: 1.6; }
+    @media (max-width: 760px) {
+      .tl-track { grid-template-columns: 1fr; gap: 32px; }
+      .tl-track::before { display: none; }
+      .tl-item { flex-direction: row; text-align: left; gap: 20px; align-items: flex-start; }
+      .tl-year { min-width: 48px; margin-bottom: 0; padding-top: 2px; }
+      .tl-dot { margin-bottom: 0; margin-top: 6px; flex-shrink: 0; }
+    }
+
+    /* ── PILARES ── */
+    #pilares { background: var(--gray); }
+    .pilares-header { text-align: center; margin-bottom: 56px; }
+    .pilares-header .section-label { justify-content: center; }
+    .pilares-header .section-label::before { display: none; }
+    .pilares-header .section-sub { margin: 0 auto; text-align: center; }
+    .pilares-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .pilar-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      border: 1px solid var(--gray2);
+      box-shadow: var(--shadow);
+      transition: transform var(--trans-slow), box-shadow var(--trans-slow), border-color var(--trans-slow);
+    }
+    .pilar-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+      border-color: rgba(0,153,204,.3);
+    }
+    .pilar-icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, var(--navy), var(--sky));
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px;
+      transition: transform var(--trans-slow);
+    }
+    .pilar-card:hover .pilar-icon { transform: scale(1.08) rotate(-3deg); }
+    .pilar-icon svg { width: 32px; height: 32px; color: #fff; }
+    .pilar-card h3 {
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .pilar-card p { font-size: .9rem; color: var(--gray3); line-height: 1.65; }
+    @media (max-width: 860px) { .pilares-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .pilares-grid { grid-template-columns: 1fr; } }
+
+    /* ── PROCESO ── */
+    #proceso { background: var(--white); }
+    .proceso-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .proceso-img {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+    }
+    .proceso-img img { width: 100%; }
+    .proceso-text .section-sub { max-width: 100%; margin-bottom: 28px; }
+    .proceso-steps {
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .proceso-step {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .step-num {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--navy);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--sky);
+    }
+    .step-content h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .step-content p { font-size: .88rem; color: var(--gray3); line-height: 1.6; }
+    @media (max-width: 800px) {
+      .proceso-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── PRESENCIA ── */
+    #presencia {
+      background: linear-gradient(135deg, #001020 0%, var(--navy) 55%, #004080 100%);
+      position: relative; overflow: hidden;
+    }
+    #presencia::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 60%, rgba(0,153,204,.14) 0%, transparent 55%);
+    }
+    .presencia-inner {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .presencia-text .section-label { color: #7fd4f0; }
+    .presencia-text h2 { color: var(--white); margin-bottom: 16px; }
+    .presencia-text p { color: rgba(255,255,255,.65); margin-bottom: 32px; font-size: 1rem; line-height: 1.75; }
+    .presencia-items { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+    .presencia-item {
+      display: flex; gap: 14px; align-items: center;
+      color: rgba(255,255,255,.8); font-size: .95rem;
+    }
+    .presencia-item svg { flex-shrink: 0; color: var(--sky); }
+    .presencia-map {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      height: 360px;
+      border: 2px solid rgba(255,255,255,.1);
+    }
+    .presencia-map iframe { width: 100%; height: 100%; border: none; }
+    .map-placeholder {
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,.06);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      color: rgba(255,255,255,.4);
+    }
+    .map-placeholder svg { width: 48px; height: 48px; }
+    .map-placeholder span { font-size: .9rem; }
+    @media (max-width: 800px) {
+      .presencia-inner { grid-template-columns: 1fr; gap: 40px; }
+      .presencia-map { height: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar" role="navigation" aria-label="Navegación principal">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="ROTOMUNDO inicio">
+      <img src="logo sin fondo.png" alt="" class="nav-logo-icon" aria-hidden="true" />
+      <img src="logo rotomundo letras.png" alt="ROTOMUNDO" class="nav-logo-text" />
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="nosotros.html" class="nav-active">Nosotros</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+    <a href="https://api.whatsapp.com/send?phone=525578289958&text=Hola,%20me%20interesa%20cotizar%20un%20producto%20ROTOMUNDO" target="_blank" rel="noopener" class="nav-cta-btn" aria-label="WhatsApp">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú móvil">
+  <a href="index.html">Inicio</a><a href="productos.html">Productos</a><a href="nosotros.html">Nosotros</a><a href="contacto.html">Contacto</a>
+  <a href="https://api.whatsapp.com/send?phone=525578289958" target="_blank" rel="noopener" class="nav-cta-btn">WhatsApp</a>
+</div>
+
+<!-- PAGE HERO -->
+<header class="page-hero" aria-label="Encabezado nosotros">
+  <div class="container">
+    <nav class="page-breadcrumb" aria-label="Ruta">
+      <a href="index.html">Inicio</a>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      <span>Nosotros</span>
+    </nav>
+    <h1 class="page-hero-title h-enter d1">Fabricantes mexicanos<br/><em>de ingeniería hidráulica</em></h1>
+    <p class="page-hero-sub h-enter d2">No somos distribuidores. Somos fabricantes. Desde 2018 operamos nuestra propia planta en Cuautitlán Izcalli, controlando cada etapa del proceso para entregar un producto sin compromisos.</p>
+  </div>
+</header>
+
+<!-- STATS BAR -->
+<section class="stats-bar" aria-label="Estadísticas clave">
+  <div class="container">
+    <div class="stats-bar-inner" style="grid-template-columns: repeat(4,1fr);">
+      <div class="stat-block fade-in" data-d="1">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="num">7<span>+</span></div>
+          <div class="lbl">Años fabricando en México</div>
+        </div>
+      </div>
+      <div class="stat-block fade-in" data-d="2">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="num">15<span>a</span></div>
+          <div class="lbl">Garantía máxima línea Tricapa</div>
+        </div>
+      </div>
+      <div class="stat-block fade-in" data-d="3">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="num">100<span>%</span></div>
+          <div class="lbl">Polietileno virgen, cero reciclado</div>
+        </div>
+      </div>
+      <div class="stat-block fade-in" data-d="4">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="stat-info">
+          <div class="num">ZMVM</div>
+          <div class="lbl">Entrega a domicilio en toda el área metropolitana</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORIA -->
+<section id="historia" class="section" aria-labelledby="hist-title">
+  <div class="container">
+    <div class="historia-grid">
+      <div class="historia-img-side fade-in">
+        <div class="historia-img">
+          <img src="assets/empresa_01.jpeg" alt="Planta de producción ROTOMUNDO en Cuautitlán Izcalli" loading="lazy" />
+        </div>
+      </div>
+      <div class="historia-text fade-in" data-d="2">
+        <p class="section-label">Nuestra historia</p>
+        <h2 id="hist-title" class="section-title">Nació de una decisión de no ceder en calidad</h2>
+        <p class="section-sub">En 2018, cuando el mercado de tinacos en México estaba dominado por productos fabricados con material reciclado y garantías de papel, ROTOMUNDO tomó la decisión opuesta: planta propia, polietileno 100% virgen y garantía real de hasta 15 años. No fue una apuesta fácil, pero era la correcta.</p>
+        <div class="historia-list">
+          <div class="historia-list-item">
+            <div class="hist-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <p><strong>Planta propia en Cuautitlán Izcalli</strong> — no somos intermediarios. Controlamos diseño, fabricación, calidad y entrega desde el origen hasta tu hogar.</p>
+          </div>
+          <div class="historia-list-item">
+            <div class="hist-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <p><strong>Tecnología de rotomoldeo de precisión</strong> — nuestros hornos biaxiales garantizan grosor uniforme en cada pieza, sin costuras, sin puntos débiles.</p>
+          </div>
+          <div class="historia-list-item">
+            <div class="hist-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <p><strong>Cero reciclado, siempre virgen</strong> — cada gramo de polietileno que entra a nuestros moldes es materia prima virgen de alta densidad. Sin excepciones.</p>
+          </div>
+          <div class="historia-list-item">
+            <div class="hist-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <p><strong>Garantía que se cumple</strong> — hasta 15 años contra defecto de fabricación, respaldada con documentación oficial y soporte directo del fabricante.</p>
+          </div>
+          <div class="historia-list-item">
+            <div class="hist-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <p><strong>Entrega a domicilio en toda la ZMVM</strong> — flota propia de distribución para hogares, comercios y proyectos industriales en todo el Estado de México y CDMX.</p>
+          </div>
+        </div>
+        <a href="productos.html" class="btn btn-primary">Ver catálogo completo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline" class="section" style="background:var(--gray); border-top:1px solid var(--gray2);" aria-labelledby="tl-title">
+  <div class="container">
+    <div class="fade-in" style="text-align:center; margin-bottom:56px;">
+      <p class="section-label" style="justify-content:center;">Evolución</p>
+      <h2 id="tl-title" class="section-title">Siete años de crecimiento sostenido</h2>
+    </div>
+    <div class="tl-track">
+      <div class="tl-item fade-in" data-d="1">
+        <div class="tl-year">2018</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Fundación y primera línea</h4>
+          <p>Se establece la planta en Cuautitlán Izcalli. Primera línea de producción de tinacos bicapa con polietileno virgen. El mercado lo ignoró. Los clientes no.</p>
+        </div>
+      </div>
+      <div class="tl-item fade-in" data-d="2">
+        <div class="tl-year">2020</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Expansión a cisternas</h4>
+          <p>Ante la demanda del sector comercial e industrial, se incorpora la línea de cisternas de alta capacidad. Primer modelo de 5,000 litros para uso industrial.</p>
+        </div>
+      </div>
+      <div class="tl-item fade-in" data-d="3">
+        <div class="tl-year">2022</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Lanzamiento línea Tricapa Premium</h4>
+          <p>Se introduce la tecnología tricapa con capa antibacterial integrada y protección UV reforzada. Garantía ampliada a 15 años. El estándar más alto del mercado.</p>
+        </div>
+      </div>
+      <div class="tl-item fade-in" data-d="4">
+        <div class="tl-year">2024</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Nueva capacidad y distribución ZMVM</h4>
+          <p>Ampliación de la nave industrial. Flota de distribución propia para toda la Zona Metropolitana del Valle de México. Más de 12 modelos en catálogo activo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILARES FUNDAMENTALES -->
+<section id="pilares" class="section" aria-labelledby="pilar-title">
+  <div class="container">
+    <div class="pilares-header fade-in">
+      <p class="section-label">Lo que nos define</p>
+      <h2 id="pilar-title" class="section-title">Tres principios que no negociamos</h2>
+      <p class="section-sub">Desde el primer día, ROTOMUNDO opera bajo una filosofía simple: si no lo haríamos para nuestra propia familia, no lo fabricamos para la tuya.</p>
+    </div>
+    <div class="pilares-grid">
+      <div class="pilar-card fade-in" data-d="1">
+        <div class="pilar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Fabricación sin atajos</h3>
+        <p>Polietileno virgen 100%, sin excepciones. No usamos material reciclado porque sabemos exactamente lo que le entra al molde — y eso hace toda la diferencia en la durabilidad y en la pureza del agua que almacenas.</p>
+      </div>
+      <div class="pilar-card fade-in" data-d="2">
+        <div class="pilar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>Ingeniería que se ve y se siente</h3>
+        <p>Cada tinaco y cisterna ROTOMUNDO tiene paredes uniformes, sin costuras y sin puntos débiles. El proceso de rotomoldeo biaxial que utilizamos garantiza una pieza monolítica que resiste décadas de uso, radiación solar y cambios de temperatura extremos.</p>
+      </div>
+      <div class="pilar-card fade-in" data-d="3">
+        <div class="pilar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012.18 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.34a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        </div>
+        <h3>Respaldo real, no de papel</h3>
+        <p>Nuestra garantía de hasta 15 años no es un argumento de venta — es un compromiso que podemos sostener porque somos el fabricante. Si hay un defecto de fabricación, lo resolvemos nosotros. Sin intermediarios, sin excusas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIADORES CON FOTOS -->
+<section id="diferenciadores" class="section" style="background:#fff; border-top:1px solid var(--gray2);" aria-label="Por qué ROTOMUNDO">
+  <div class="container">
+    <div class="fade-in" style="text-align:center; margin-bottom:64px;">
+      <p class="section-label" style="justify-content:center;">Nuestro proceso</p>
+      <h2 class="section-title">Lo que sucede antes de que llegue a tu azotea</h2>
+      <p class="section-sub" style="margin:0 auto; text-align:center;">Cada tinaco pasa por un proceso de fabricación riguroso. Esto es lo que garantiza que el producto que recibes dure décadas.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px;">
+      <div class="fade-in" data-d="1" style="border-radius:16px; overflow:hidden; box-shadow:var(--shadow-xl);">
+        <img src="assets/roto_01.jpeg" alt="Tinaco recién fabricado saliendo del molde" loading="lazy" style="width:100%; height:320px; object-fit:cover;" />
+      </div>
+      <div class="fade-in" data-d="2" style="display:flex; flex-direction:column; justify-content:center; gap:24px; padding:16px 0;">
+        <div style="display:flex; gap:16px; align-items:flex-start;">
+          <div style="width:44px;height:44px;flex-shrink:0;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--sky);font-family:'Oswald',sans-serif;font-weight:700;font-size:1.1rem;">1</div>
+          <div><h4 style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Carga de polietileno virgen</h4><p style="font-size:.88rem;color:var(--gray3);line-height:1.6;">Solo resina virgen de alta densidad entra al molde. Inspeccionamos cada lote para garantizar pureza y consistencia.</p></div>
+        </div>
+        <div style="display:flex; gap:16px; align-items:flex-start;">
+          <div style="width:44px;height:44px;flex-shrink:0;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--sky);font-family:'Oswald',sans-serif;font-weight:700;font-size:1.1rem;">2</div>
+          <div><h4 style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Rotomoldeo biaxial a temperatura controlada</h4><p style="font-size:.88rem;color:var(--gray3);line-height:1.6;">El molde gira en dos ejes simultáneamente dentro del horno. El plástico se distribuye de forma uniforme creando paredes consistentes sin costuras.</p></div>
+        </div>
+        <div style="display:flex; gap:16px; align-items:flex-start;">
+          <div style="width:44px;height:44px;flex-shrink:0;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--sky);font-family:'Oswald',sans-serif;font-weight:700;font-size:1.1rem;">3</div>
+          <div><h4 style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Desmolde e inspección de calidad</h4><p style="font-size:.88rem;color:var(--gray3);line-height:1.6;">Cada pieza es inspeccionada visualmente y dimensionalmente. Se aplica prueba hidráulica antes del sellado final y empaque para distribución.</p></div>
+        </div>
+      </div>
+      <div class="fade-in" data-d="3" style="display:flex; flex-direction:column; justify-content:center; gap:24px; padding:16px 0;">
+        <div style="padding:28px;background:var(--gray);border-radius:16px;border:1px solid var(--gray2);">
+          <p style="font-size:1.15rem;font-family:'Oswald',sans-serif;font-weight:700;color:var(--navy);margin-bottom:12px;">"Fabricamos como si el agua fuera para nuestra propia familia."</p>
+          <p style="font-size:.9rem;color:var(--gray3);line-height:1.7;">Esta frase no es marketing. Es la razón por la que usamos polietileno virgen cuando cuesta más, por la que tenemos una capa antibacterial cuando nadie la exige, y por la que damos garantía de 15 años cuando el estándar es 5.</p>
+        </div>
+      </div>
+      <div class="fade-in" data-d="4" style="border-radius:16px; overflow:hidden; box-shadow:var(--shadow-xl);">
+        <img src="assets/roto_03.jpeg" alt="Control de calidad en línea de producción ROTOMUNDO" loading="lazy" style="width:100%; height:320px; object-fit:cover;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO ROTOMOLDEO -->
+<section id="proceso" class="section" aria-labelledby="proc-title">
+  <div class="container">
+    <div class="proceso-grid">
+      <div class="proceso-text fade-in">
+        <p class="section-label">Cómo lo hacemos</p>
+        <h2 id="proc-title" class="section-title">Excelencia en cada proceso</h2>
+        <p class="section-sub">El proceso de rotomoldeo nos permite fabricar contenedores sin costuras, con grosor uniforme y la resistencia estructural que el almacenamiento de agua requiere.</p>
+        <div class="proceso-steps">
+          <div class="proceso-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Selección de materia prima</h4>
+              <p>Solo polietileno de media densidad 100% virgen, sin materiales reciclados.</p>
+            </div>
+          </div>
+          <div class="proceso-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Rotomoldeo a temperatura controlada</h4>
+              <p>El material se distribuye uniformemente en el molde rotatorio para garantizar grosor consistente.</p>
+            </div>
+          </div>
+          <div class="proceso-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Aplicación de capas funcionales</h4>
+              <p>Capa interna antibacterial y capa externa con inhibidor UV integradas durante el proceso.</p>
+            </div>
+          </div>
+          <div class="proceso-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Control de calidad y sellado</h4>
+              <p>Inspección dimensional, prueba hidráulica y aplicación de cinturones de refuerzo estructural.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proceso-img-side fade-in" data-d="2">
+        <div class="proceso-img">
+          <img src="assets/roto_04.jpeg" alt="Proceso de rotomoldeo ROTOMUNDO" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESENCIA ESTRATÉGICA -->
+<section id="presencia" class="section" aria-labelledby="pres-title">
+  <div class="container">
+    <div class="presencia-inner">
+      <div class="presencia-text fade-in">
+        <p class="section-label">Dónde estamos</p>
+        <h2 id="pres-title" class="section-title" style="color:#fff;">Centro de Distribución Estratégico</h2>
+        <p>Ubicados en Cuautitlán Izcalli, en el corazón logístico del Estado de México, garantizamos entrega rápida a toda la zona metropolitana y el interior de la república.</p>
+        <div class="presencia-items">
+          <div class="presencia-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Cuautitlán Izcalli, Estado de México</span>
+          </div>
+          <div class="presencia-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Lun–Vie 9:00–20:00 · Sáb 9:00–14:00</span>
+          </div>
+          <div class="presencia-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m4 3h-8a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2v-6a2 2 0 00-2-2z"/></svg>
+            <span>Rutas directas a CDMX, Toluca, Pachuca y Querétaro</span>
+          </div>
+        </div>
+        <a href="contacto.html" class="btn btn-primary">Ver ubicación y contacto</a>
+      </div>
+      <div class="presencia-map fade-in" data-d="2">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60152.67!2d-99.21!3d19.66!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f8a95cdfe901%3A0x40a5ddd98bd1d7b4!2sCuautitl%C3%A1n%20Izcalli%2C%20State%20of%20Mexico!5e0!3m2!1sen!2smx!4v1700000000000!5m2!1sen!2smx"
+          width="600" height="360" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación ROTOMUNDO - Cuautitlán Izcalli">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" aria-label="ROTOMUNDO">
+          <img src="logo sin fondo.png" alt="" class="nav-logo-icon footer-logo-icon" aria-hidden="true" />
+          <img src="logo rotomundo letras.png" alt="ROTOMUNDO" class="nav-logo-text footer-logo-text" />
+        </a>
+        <p class="footer-tagline">Lo mejor al alcance de tus manos. Comprometidos con el agua limpia desde 2018.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/p/Rotomundo-61566841648127/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/__rotomundo__" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://www.tiktok.com/@_rotomundo_" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a>
+          <a href="https://api.whatsapp.com/send?phone=525578289958" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Navegación</h5><ul><li><a href="index.html">Inicio</a></li><li><a href="productos.html">Productos</a></li><li><a href="nosotros.html">Nosotros</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+      <div class="footer-col"><h5>Empresa</h5><ul><li><a href="nosotros.html#historia">Nuestra Historia</a></li><li><a href="nosotros.html#pilares">Nuestros Pilares</a></li><li><a href="nosotros.html#proceso">Proceso</a></li><li><a href="nosotros.html#presencia">Ubicación</a></li></ul></div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Cuautitlán Izcalli, Edo. México</span></div>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012.18 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.34a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg><a href="tel:+525578289958">+52 55 7828 9958</a></div>
+        <div class="footer-contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:contacto@rotomundo.com.mx">contacto@rotomundo.com.mx</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ROTOMUNDO. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://api.whatsapp.com/send?phone=525578289958" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  <div class="wa-pulse" aria-hidden="true"></div>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+  const ham = document.getElementById('hamburger'), menu = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => { const o = ham.classList.toggle('open'); menu.classList.toggle('open', o); ham.setAttribute('aria-expanded', o); });
+  function animateCount(el) {
+    const target = parseInt(el.dataset.count, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1400;
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      el.textContent = Math.round((1 - Math.pow(1 - t, 3)) * target) + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const cObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); cObs.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => cObs.observe(el));
+  const fObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fObs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => fObs.observe(el));
+</script>
+</body>
+</html>
