@@ -290,7 +290,7 @@ h4 { font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: 
   border-bottom: 1px solid var(--gray2);
 }
 .mobile-menu a:last-of-type { border-bottom: none; }
-.mobile-menu .nav-cta-btn { margin-top: 16px; width: 100%; justify-content: center; }
+.mobile-menu .nav-cta-btn { margin-top: 16px; width: 100%; justify-content: center; color: #fff; }
 @media (max-width: 860px) {
   .nav-links, .nav-cta-btn { display: none; }
   .hamburger { display: flex; }
